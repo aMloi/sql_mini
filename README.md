@@ -34,4 +34,52 @@ WITH home AS (
          WHEN m.home_goal < m.away_goal THEN 'MU Loss'  
          ELSE 'Tie' END AS outcome  
   FROM match AS m  
-  LEFT JOIN team AS t ON m.hometeam_id = t.team_api_id)  
+  LEFT JOIN team AS t ON m.hometeam_id = t.team_api_id)
+2. How It Works
+CTE: home
+
+Identifies matches where Manchester United played as the home team.
+Determines the match outcome:
+MU Win: Home goals > Away goals.
+MU Loss: Home goals < Away goals.
+Tie: Home goals = Away goals.
+CTE: away
+
+Identifies matches where Manchester United played as the away team.
+Determines the match outcome:
+MU Win: Away goals > Home goals.
+MU Loss: Away goals < Home goals.
+Tie: Away goals = Home goals.
+Final Query
+
+Combines the home and away CTEs with the match table using LEFT JOIN.
+Filters matches played during the 2014/2015 season where Manchester United lost, either as the home or away team.
+Adds a ranking of matches based on the absolute goal difference using the RANK() function.
+3. Output Columns
+date: Date of the match.
+home_team: Name of the home team.
+away_team: Name of the away team.
+home_goal: Goals scored by the home team.
+away_goal: Goals scored by the away team.
+match_rank: Rank of the match based on the absolute goal difference.
+4. Example Output
+Date	Home Team	Away Team	Home Goal	Away Goal	Match Rank
+2014-11-22	Manchester United	Arsenal	1	3	1
+2015-02-07	Chelsea	Manchester United	0	2	2
+2015-05-09	Manchester United	Everton	1	2	3
+Key Techniques Used
+CTEs (Common Table Expressions)
+
+Simplify complex queries by creating intermediate result sets (home and away).
+Window Function: RANK()
+
+Used to rank matches based on the absolute goal difference.
+Filtering by Conditions
+
+Ensures only losses by Manchester United in the 2014/2015 season are included.
+Usage
+Use this query to:
+
+Analyze team performance for specific seasons.
+Identify key matches with the largest goal differences.
+Gain insights into Manchester United's losses during the 2014/2015 season
